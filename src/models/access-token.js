@@ -11,14 +11,6 @@ const schema = new Schema({
     type: String,
     required: true,
   },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedBy: {
-    type: String,
-    required: true,
-  },
   id: {
     type: String,
     default: uuidv4(),
@@ -26,21 +18,17 @@ const schema = new Schema({
   },
   type: {
     type: String,
-    default: 'School',
+    default: 'News',
     required: true,
   },
-  address: {
+  token: {
     type: String,
-    required: true,
-  },
-  name: {
-    type: String,
+    default: 'News',
     required: true,
   },
 });
 
-schema.index({ name: 1 }, { background: true, unique: true });
 schema.index({ id: 1 }, { background: true, unique: true });
-schema.index({ createdAt: 1, id: 1 }, { background: true, unique: false });
+schema.index({ token: 1 }, { background: true, unique: true });
 
 export default schema;
