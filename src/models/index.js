@@ -1,5 +1,6 @@
 import { model } from 'mongoose';
 
+export const AccessToken = model('AccessToken', import('./access-token.js'));
 export const Feed = model('Feed', import('./feed.js'));
 export const NewsMembership = model(
   'NewsMembership',
