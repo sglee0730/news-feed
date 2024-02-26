@@ -1,6 +1,6 @@
 import { News, NewsMembership, School, User } from '../models/index.js';
 
-export const createNewsMembership = async (schoolId, newsId, userId) => {
+export const createNewsMembership = async (schoolId, userId) => {
   const user = await User.findOne({ id: userId, role: 'Admin' }).lean();
   if (!user) {
     return { status: 403, message: '해당 작업을 수행할 권한이 없습니다.' };
@@ -9,11 +9,6 @@ export const createNewsMembership = async (schoolId, newsId, userId) => {
   const isSchoolExist = await School.exists({ id: schoolId });
   if (!isSchoolExist) {
     return { status: 404, message: '학교를 찾을 수 없습니다.' };
-  }
-
-  const isNewsExist = await News.exists({ school: schoolId, id: newsId });
-  if (!isNewsExist) {
-    return { status: 404, message: '소식을 찾을 수 없습니다.' };
   }
 
   const newsMembership = await NewsMembership.create({
@@ -27,7 +22,6 @@ export const createNewsMembership = async (schoolId, newsId, userId) => {
 
 export const deleteNewsMembership = async (
   schoolId,
-  newsId,
   newsMembershipId,
   userId,
 ) => {
@@ -39,11 +33,6 @@ export const deleteNewsMembership = async (
   const isSchoolExist = await School.exists({ id: schoolId });
   if (!isSchoolExist) {
     return { status: 404, message: '학교를 찾을 수 없습니다.' };
-  }
-
-  const isNewsExist = await News.exists({ school: schoolId, id: newsId });
-  if (!isNewsExist) {
-    return { status: 404, message: '소식을 찾을 수 없습니다.' };
   }
 
   const deletedNewsMembership = await NewsMembership.deleteOne({
