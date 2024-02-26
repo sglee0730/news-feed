@@ -18,6 +18,15 @@ export const createNews = async (body, schoolId, userId) => {
     ...body,
   });
 
+  const newsMemberships = await NewsMembership.find({ school: schoolId });
+  await Feed.create(
+    newsMemberships.map((e) => ({
+      news: news.id,
+      school: schoolId,
+      createdBy: e.user,
+    })),
+  );
+
   return news;
 };
 
@@ -44,8 +53,6 @@ export const updateNews = async (body, schoolId, newsId, userId) => {
       ...body,
     },
   );
-
-  await Feed.deleteMany({ school: schoolId, news: newsId });
 
   return news;
 };
