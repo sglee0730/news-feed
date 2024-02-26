@@ -4,7 +4,7 @@ import NewsMembershipRouter from './news-memberships/index.js';
 
 const router = Router();
 
-router.use('feeds', FeedRouter);
-router.use('newsMemberships', NewsMembershipRouter);
+router.use('/:userId/feeds', FeedRouter);
+router.use('/:userId/newsMemberships', NewsMembershipRouter);
 
 export default router;

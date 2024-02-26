@@ -1,9 +1,12 @@
 import { Router } from 'express';
+import NewsMembershipRouter from './news-memberships/index.js';
 import { NewsService } from '../../../services/index.js';
 import { checkBody } from '../../../middlewares/index.js';
 import dto from './dto.js';
 
 const router = Router();
+
+router.use('/:newsId/newsMemberships', NewsMembershipRouter);
 
 router.post('/', [checkBody(dto)], async (req, res, next) => {
   const schoolId = req.params.schoolId;

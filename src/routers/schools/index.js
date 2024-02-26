@@ -4,11 +4,7 @@ import PageRouter from './pages/index.js';
 
 const router = Router();
 
-router.use('news', NewsRouter);
-router.use('pages', PageRouter);
-
-router.get('/', (req, res, next) => {
-    
-});
+router.use('/:schoolId/news', NewsRouter);
+router.use('/:schoolId/pages', PageRouter);
 
 export default router;
