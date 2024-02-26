@@ -11,9 +11,6 @@ const schema = new Schema({
     type: String,
     required: true,
   },
-  readAt: {
-    type: Date,
-  },
   id: {
     type: String,
     default: uuidv4(),

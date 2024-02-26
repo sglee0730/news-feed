@@ -1,4 +1,15 @@
-import { Page, School, User } from '../models/index.js';
+import { NewsMembership, Page, School, User } from '../models/index.js';
+
+export const getSubscribedPages = async (limit, userId) => {
+  const newsMemberships = await NewsMembership.find({ user: userId })
+    .limit(limit)
+    .lean();
+
+  const schoolIds = newsMemberships.map((e) => e.school);
+  const pages = await School.find({ id: { $in: schoolIds } }).limit(limit);
+
+  return pages;
+};
 
 export const getPage = async (schoolId) => {
   const isSchoolExist = await School.exists({ id: schoolId });
@@ -13,6 +24,7 @@ export const getPage = async (schoolId) => {
 
   return page;
 };
+
 export const createPage = async (body, schoolId, userId) => {
   const isSchoolExist = await School.exists({ id: schoolId });
   if (!isSchoolExist) {
@@ -38,6 +50,7 @@ export const createPage = async (body, schoolId, userId) => {
 
   return page;
 };
+
 export const updatePage = async (body, schoolId, userId) => {
   const user = await User.findOne({ id: userId, role: 'Admin' }).lean();
   if (!user) {
