@@ -26,6 +26,10 @@ const schema = new Schema({
     type: String,
     required: true,
   },
+  school: {
+    type: String,
+    required: true,
+  },
 });
 
 schema.index({ id: 1 }, { background: true, unique: true });

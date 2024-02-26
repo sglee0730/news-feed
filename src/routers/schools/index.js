@@ -7,4 +7,8 @@ const router = Router();
 router.use('news', NewsRouter);
 router.use('pages', PageRouter);
 
+router.get('/', (req, res, next) => {
+    
+});
+
 export default router;

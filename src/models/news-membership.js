@@ -10,11 +10,7 @@ const schema = new Schema({
     type: String,
     required: true,
   },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedBy: {
+  user: {
     type: String,
     required: true,
   },
@@ -27,7 +23,7 @@ const schema = new Schema({
     default: 'NewsSubscription',
     required: true,
   },
-  news: {
+  school: {
     type: String,
     required: true,
   },
@@ -35,7 +31,5 @@ const schema = new Schema({
 
 schema.index({ id: 1 }, { background: true, unique: true });
 schema.index({ createdAt: 1, id: 1 }, { background: true, unique: false });
-schema.index({ title: 1, id: 1 }, { background: true, unique: false });
-schema.index({ content: 1, id: 1 }, { background: true, unique: false });
 
 export default schema;
