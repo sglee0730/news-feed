@@ -1,9 +1,11 @@
 import { Router } from 'express';
 import { NewsService } from '../../../services/index.js';
+import { checkBody } from '../../../middlewares/index.js';
+import dto from './dto.js';
 
 const router = Router();
 
-router.post('/', (req, res, next) => {
+router.post('/', [checkBody(dto)], (req, res, next) => {
   const schoolId = req.params.schoolId;
   const userId = res.locals.userId;
   const body = req.body;
@@ -15,7 +17,7 @@ router.post('/', (req, res, next) => {
   }
 });
 
-router.put('/', (req, res, next) => {
+router.put('/', [checkBody(dto)], (req, res, next) => {
   const schoolId = req.params.schoolId;
   const newsId = req.params.newsId;
   const userId = res.locals.userId;
