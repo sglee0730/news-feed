@@ -1,4 +1,5 @@
 import { Schema } from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
 
 const schema = new Schema({
   createdAt: {
@@ -15,6 +16,7 @@ const schema = new Schema({
   },
   id: {
     type: String,
+    default: uuidv4(),
     required: true,
   },
   type: {
