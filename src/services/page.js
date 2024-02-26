@@ -3,12 +3,12 @@ import { Page, School, User } from '../models/index.js';
 export const getPage = async (schoolId) => {
   const isSchoolExist = await School.exists({ id: schoolId });
   if (!isSchoolExist) {
-    return { status: 404, message: '학교를 찾을 수 없습니다.' };
+    throw { status: 404, message: '학교를 찾을 수 없습니다.' };
   }
 
   const page = await Page.findOne({ school: schoolId }).lean();
   if (!page) {
-    return { status: 404, message: '학교 페이지가 존재하지 않습니다.' };
+    throw { status: 404, message: '학교 페이지가 존재하지 않습니다.' };
   }
 
   return page;
@@ -16,17 +16,17 @@ export const getPage = async (schoolId) => {
 export const createPage = async (body, schoolId, userId) => {
   const isSchoolExist = await School.exists({ id: schoolId });
   if (!isSchoolExist) {
-    return { status: 404, message: '학교를 찾을 수 없습니다.' };
+    throw { status: 404, message: '학교를 찾을 수 없습니다.' };
   }
 
   const isPageExist = await Page.exists({ school: schoolId }).lean();
   if (isPageExist) {
-    return { status: 409, message: '학교 페이지가 이미 존재합니다.' };
+    throw { status: 409, message: '학교 페이지가 이미 존재합니다.' };
   }
 
   const user = await User.findOne({ id: userId, role: 'Admin' }).lean();
   if (!user) {
-    return { status: 403, message: '해당 작업을 수행할 권한이 없습니다.' };
+    throw { status: 403, message: '해당 작업을 수행할 권한이 없습니다.' };
   }
 
   const page = await Page.create({
@@ -41,17 +41,17 @@ export const createPage = async (body, schoolId, userId) => {
 export const updatePage = async (body, schoolId, userId) => {
   const user = await User.findOne({ id: userId, role: 'Admin' }).lean();
   if (!user) {
-    return { status: 403, message: '해당 작업을 수행할 권한이 없습니다.' };
+    throw { status: 403, message: '해당 작업을 수행할 권한이 없습니다.' };
   }
 
   const isSchoolExist = await School.exists({ id: schoolId });
   if (!isSchoolExist) {
-    return { status: 404, message: '학교를 찾을 수 없습니다.' };
+    throw { status: 404, message: '학교를 찾을 수 없습니다.' };
   }
 
   const isPageExist = await Page.exists({ school: schoolId }).lean();
   if (!isPageExist) {
-    return { status: 404, message: '학교 페이지를 찾을 수 없습니다.' };
+    throw { status: 404, message: '학교 페이지를 찾을 수 없습니다.' };
   }
 
   const page = await Page.updateOne(
@@ -68,17 +68,17 @@ export const updatePage = async (body, schoolId, userId) => {
 export const deletePage = async (schoolId, userId) => {
   const user = await User.findOne({ id: userId, role: 'Admin' }).lean();
   if (!user) {
-    return { status: 403, message: '해당 작업을 수행할 권한이 없습니다.' };
+    throw { status: 403, message: '해당 작업을 수행할 권한이 없습니다.' };
   }
 
   const isSchoolExist = await School.exists({ id: schoolId });
   if (!isSchoolExist) {
-    return { status: 404, message: '학교를 찾을 수 없습니다.' };
+    throw { status: 404, message: '학교를 찾을 수 없습니다.' };
   }
 
   const isPageExist = await Page.exists({ school: schoolId }).lean();
   if (!isPageExist) {
-    return { status: 404, message: '학교 페이지를 찾을 수 없습니다.' };
+    throw { status: 404, message: '학교 페이지를 찾을 수 없습니다.' };
   }
 
   await Page.deleteOne({ school: schoolId });

@@ -21,7 +21,7 @@ export const createNews = async (body, schoolId, userId) => {
   return news;
 };
 
-export const updateNews = async (body, schoolId, newsId, usedId) => {
+export const updateNews = async (body, schoolId, newsId, userId) => {
   const user = await User.findOne({ id: userId, role: 'Admin' }).lean();
   if (!user) {
     return { status: 403, message: '해당 작업을 수행할 권한이 없습니다.' };
